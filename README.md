@@ -318,3 +318,20 @@ $$\text{Priority} = \text{prediction} \Rightarrow \text{AIC} \quad\quad \text{Pr
 - **Selection recovered the true signal variables:** the data-generating process used `x1, x2, x5` as the strongest true drivers — and indeed those three entered first, in the first three steps, before the weaker/noisier variables.
 - **`x6` and `x8` never mattered** — they were genuine noise in the simulation and correctly never made it past a single candidate round.
 - **Real-world caveat:** classical stepwise LR tests assume standard MLE asymptotics; at very large `n` (as here) this is generally safe, but always cross-validate the final variable set on held-out data before trusting it in production — see the wider discussion on Lasso/Elastic Net as a more scalable, assumption-light alternative for `p` in the hundreds or thousands.
+
+|---|---|---|
+| **P** | Population Parameter | Define what you're estimating — never past tense, be precise about numerator/denominator |
+| **H** | Hypotheses | State $H_0$ and $H_a$ in terms of that parameter |
+| **A** | Assumptions and Conditions | Check randomness, independence, sample size/normality conditions |
+| **N** | Name of test | Declare which test you're using (one-proportion z, chi-square, t-test, etc.) |
+| **T** | Test statistic | Compute the actual statistic (z, t, F, χ²...) |
+| **O** | Obtain p-value | Compare it to α |
+| **M** | Make a decision | Reject or fail to reject $H_0$ |
+| **S** | State conclusion | In context, plain English, tied back to the original question |
+
+| Letter | Step | What industry actually does |
+|---|---|---|
+| **C** | Cross-validate | Split data into train/validation/test (or k-fold CV). Confirm the AIC/BIC or LR-test improvement also shows up as lower error on data the model never saw during fitting. |
+| **A** | Assess effect size & business impact | Translate the coefficient into real units — dollars, churned customers, conversion lift — and compare that against the cost of adding the variable (data pipeline complexity, latency, compliance risk). |
+| **R** | Reproducibility & documentation | Version-controlled code (git), pinned dependencies (`requirements.txt`), logged random seeds, and a written record of which variables were tested and why — so the decision is auditable months later without anyone re-deriving it from memory. |
+| **E** | Evaluate post-deployment | Monitor live model performance and input data distributions over time (drift detection). Re-run the full selection process on a schedule, because a variable that was predictive in Q1 can quietly stop being predictive by Q4. |
