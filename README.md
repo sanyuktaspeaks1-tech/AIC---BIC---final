@@ -226,9 +226,9 @@ print("Churn rate:", df.y.mean())
 
 
 def fit(vars_):
-    """Fit a logistic regression on the given variable list (empty = null model)."""
-    X = sm.add_constant(df[vars_]) if vars_ else pd.DataFrame({'const': np.ones(n)})
+    X = sm.add_constant(df[vars_])
     return sm.Logit(df['y'], X).fit(disp=0)
+"""Fit a logistic regression on the given variable list (empty = null model)."""
 
 
 # ---- Null model ----
