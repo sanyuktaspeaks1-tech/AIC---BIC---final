@@ -102,7 +102,7 @@ $$\text{AIC} = 2(3) - 2(-18{,}255.406) = \mathbf{36{,}516.811} \qquad \text{BIC}
 
 ---
 
-### Step 3 — `x5` enters (has app downloaded)
+Step 3 — `x5` enters (has app downloaded)
 
 $$\ln L_{\text{new}} = -17{,}786.803$$
 
@@ -114,7 +114,7 @@ $$\text{AIC} = \mathbf{35{,}581.605} \qquad \text{BIC} = \mathbf{35{,}616.884}$$
 
 ---
 
-### Step 4 — `x7` enters (account age)
+ Step 4 — `x7` enters (account age)
 
 $$\ln L_{\text{new}} = -17{,}772.715$$
 
@@ -126,7 +126,7 @@ $$\text{AIC} = \mathbf{35{,}555.430}$$
 
 ---
 
-### Step 5 — `x4` enters (price tier)
+Step 5 — `x4` enters (price tier)
 
 $$\ln L_{\text{new}} = -17{,}764.746$$
 
@@ -138,7 +138,7 @@ $$\text{AIC} = \mathbf{35{,}541.493}$$
 
 ---
 
-### Step 6 — `x3` tested → **REJECTED**
+Step 6 — `x3` tested → **REJECTED**
 
 $$\ln L_{\text{new}} = -17{,}763.255$$
 
@@ -189,7 +189,6 @@ x4             0.0543      0.014      4.003      0.000       0.028       0.081
 
 ---
 
-## Full Code
 
 ```python
 import numpy as np
