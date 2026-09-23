@@ -183,6 +183,7 @@ x4             0.0543      0.014      4.003      0.000       0.028       0.081
 ==============================================================================
 ```
 
+In practice: data scientists doing exploratory/statistical analysis (deciding which variables matter, hypothesis testing, medical/social science research) reach for statsmodels. Engineers building a production model that just needs to predict well at scale reach for scikit-learn, XGBoost, or a neural net framework
 ---
 
 
