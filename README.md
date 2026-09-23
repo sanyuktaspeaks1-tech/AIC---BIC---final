@@ -241,42 +241,6 @@ print("\n--- NULL MODEL ---")
 print("Log-likelihood:", ll0)
 print("AIC:", aic0, "BIC:", bic0)
 
-# ---- Mixed stepwise selection ----
-candidates = ['x1', 'x2', 'x3', 'x4', 'x5', 'x6', 'x7', 'x8']
-current = []
-step = 1
-
-while True:
-    best_var, best_ll, best_model = None, None, None
-    for v in candidates:
-        if v in current:
-            continue
-        m = fit(current + [v])
-        if best_ll is None or m.llf > best_ll:
-            best_ll, best_var, best_model = m.llf, v, m
-
-    cur_model = fit(current) if current else null_model
-    LR = 2 * (best_model.llf - cur_model.llf)
-    pval = 1 - stats.chi2.cdf(LR, df=1)
-    k = len(current) + 2  # +1 candidate var, +1 intercept
-    aic = 2 * k - 2 * best_model.llf
-    bic = k * np.log(n) - 2 * best_model.llf
-
-    print(f"\n--- STEP {step}: candidate = {best_var} ---")
-    print(f"LR = {LR:.3f}, p-value = {pval:.6f}, AIC = {aic:.3f}, BIC = {bic:.3f}")
-
-    if pval < 0.05:
-        current.append(best_var)
-        print(f"=> ENTER {best_var}")
-    else:
-        print("=> STOP, no more significant variables")
-        break
-    step += 1
-    if step > len(candidates):
-        break
-
-print("\nFINAL MODEL VARS:", current)
-final_model = fit(current)
 print(final_model.summary())
 ```
 
