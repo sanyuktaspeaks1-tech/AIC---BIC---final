@@ -46,7 +46,7 @@ Resulting empirical churn rate: **14.498%**
 $$\ln L(\beta) = \sum_{i=1}^{n} \Big[y_i \ln(\hat p_i) + (1-y_i)\ln(1-\hat p_i)\Big]$$
 
 
-$$\text{LR} = 2\big(\ln L_{\text{new}} - \ln L_{\text{old}}\big) \sim \chi^2_{q}$$
+$$\text{LR} = 2\big(\ln L_{\text{new}} - \ln L_{\text{old}}\big) \sim \chi^2_{q}$$ (Derivation is way out of scope)
 
 where `q` = number of parameters added/removed (here always 1). Compare against critical value **3.84** at α = 0.05 for `q = 1`.
 
