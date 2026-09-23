@@ -319,6 +319,7 @@ $$\text{Priority} = \text{prediction} \Rightarrow \text{AIC} \quad\quad \text{Pr
 - **`x6` and `x8` never mattered** — they were genuine noise in the simulation and correctly never made it past a single candidate round.
 - **Real-world caveat:** classical stepwise LR tests assume standard MLE asymptotics; at very large `n` (as here) this is generally safe, but always cross-validate the final variable set on held-out data before trusting it in production — see the wider discussion on Lasso/Elastic Net as a more scalable, assumption-light alternative for `p` in the hundreds or thousands.
 
+| Letter | Step | What it means |
 |---|---|---|
 | **P** | Population Parameter | Define what you're estimating — never past tense, be precise about numerator/denominator |
 | **H** | Hypotheses | State $H_0$ and $H_a$ in terms of that parameter |
