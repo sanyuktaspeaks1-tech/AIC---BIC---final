@@ -3,10 +3,6 @@
 A worked, fully-computed example of **stepwise (mixed) subset selection** in logistic regression — every log-likelihood, AIC, BIC, and likelihood-ratio test below is computed from a real (simulated) 50,000-row dataset, not hand-picked illustrative numbers.
 
 ---
-
-
-## Problem Setup
-
 **Business question:** Will a customer cancel their subscription next month?
 
 - **Outcome:** `y ∈ {0, 1}` — churn indicator
