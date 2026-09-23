@@ -4,17 +4,6 @@ A worked, fully-computed example of **stepwise (mixed) subset selection** in log
 
 ---
 
-## Table of Contents
-
-- [Problem Setup](#problem-setup)
-- [Dataset Generation](#dataset-generation)
-- [Math Background](#math-background)
-- [Step-by-Step Selection with Explicit Calculations](#step-by-step-selection-with-explicit-calculations)
-- [Final Model](#final-model)
-- [Full Code](#full-code)
-- [Key Takeaways](#key-takeaways)
-
----
 
 ## Problem Setup
 
@@ -55,13 +44,11 @@ Resulting empirical churn rate: **14.498%**
 
 ---
 
-## Math Background
 
 ### Log-Likelihood (Bernoulli / logistic case)
 
 $$\ln L(\beta) = \sum_{i=1}^{n} \Big[y_i \ln(\hat p_i) + (1-y_i)\ln(1-\hat p_i)\Big]$$
 
-### Likelihood Ratio (LR) Test — used to decide "add or drop this variable?"
 
 $$\text{LR} = 2\big(\ln L_{\text{new}} - \ln L_{\text{old}}\big) \sim \chi^2_{q}$$
 
@@ -77,7 +64,7 @@ $$\text{AIC} = 2k - 2\ln L \qquad \text{BIC} = k\ln(n) - 2\ln L$$
 
 ## Step-by-Step Selection with Explicit Calculations
 
-### Step 0 — Null Model (intercept only)
+ Step 0 — Null Model (intercept only)
 
 $$\ln L_{\text{null}} = -20{,}695.082$$
 
@@ -87,7 +74,7 @@ $$\text{BIC} = 1 \times \ln(50{,}000) - 2(-20{,}695.082) = 10.820 + 41{,}390.164
 
 ---
 
-### Step 1 — `x2` enters (days since last login)
+Step 1 — `x2` enters (days since last login)
 
 $$\ln L_{\text{new}} = -18{,}863.928$$
 
@@ -97,11 +84,11 @@ $$p\text{-value} = P(\chi^2_1 > 3{,}662.307) \approx \mathbf{0.000000}$$
 
 $$\text{AIC} = 2(2) - 2(-18{,}863.928) = \mathbf{37{,}731.857} \qquad \text{BIC} = \mathbf{37{,}749.496}$$
 
-✅ **Enters** (LR ≫ 3.84)
+✅ Enters (LR ≫ 3.84)
 
 ---
 
-### Step 2 — `x1` enters (monthly watch hours)
+ Step 2 — `x1` enters (monthly watch hours)
 
 $$\ln L_{\text{new}} = -18{,}255.406$$
 
