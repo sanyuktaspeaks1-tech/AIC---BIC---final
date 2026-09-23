@@ -2,79 +2,7 @@
 
 ## Model Selection Criteria — AIC & BIC
 
-Both AIC and BIC penalize model complexity while rewarding goodness of fit, but they weight that penalty differently.
-
-### Formulas
-
-$$\text{AIC} = 2k - 2\ln(\hat{L}) \quad \text{BIC} = k\ln(n) - 2\ln(\hat{L})$$
-
-Where:
-
-- $k$ = number of parameters (including the intercept)
-- $n$ = number of observations
-- $\hat{L}$ = the maximized likelihood of the fitted model
-
-### Interpretation
-
-| Term | Meaning |
-|---|---|
-| $2k$ / $k\ln(n)$ | Complexity penalty — grows with more parameters |
-| $-2\ln(\hat L)$ | Fit term — grows more negative (i.e., better) as the model fits the data more closely |
-
-**Lower AIC/BIC is always better.**
-
-### Why They Differ
-
-$$\text{BIC penalty} - \text{AIC penalty} = k\ln(n) - 2k = k\big(\ln(n) - 2\big)$$
-
-Since $\ln(n) > 2$ whenever $n > e^2 \approx 7.4$, BIC's penalty exceeds AIC's for essentially any realistic sample size — meaning **BIC punishes extra variables more harshly than AIC**, especially as $n$ grows.
-
-### Rule of Thumb
-
-$$\Delta\text{AIC} = \text{AIC}_{\text{model}} - \text{AIC}_{\text{best model}}$$
-
-- $\Delta \text{AIC} < 2$ — models are essentially indistinguishable
-- $2 \le \Delta \text{AIC} \le 7$ — noticeably worse, but not conclusively ruled out
-- $\Delta \text{AIC} > 10$ — the worse model has essentially no support
-
-  ### When to Use AIC vs. BIC
-
-| Situation | Use | Why |
-|---|---|---|
-| Your main goal is **prediction accuracy** | AIC | AIC is asymptotically equivalent to leave-one-out cross-validation — it optimizes for out-of-sample predictive performance, even if that means keeping a slightly "wrong" but useful variable |
-| Your main goal is finding the **true, correct model** | BIC | BIC is *consistent* — as $n \to \infty$, it converges on the actual true model (assuming the true model is among your candidates); AIC does not have this guarantee and can overfit even with infinite data |
-| Sample size is **small to moderate** | AIC | BIC's heavier penalty can be too aggressive with limited data, discarding genuinely useful variables |
-| Sample size is **large** (thousands+) | BIC | The extra penalty prevents you from keeping marginal variables just because a huge sample makes even tiny effects "significant" |
-| You want a **simpler, more interpretable** model | BIC | Its stricter penalty naturally favors fewer variables |
-| You're comparing **many candidate models** (e.g. dozens of subsets) | AIC | BIC's strong penalty can under-select variables when the candidate pool is very large, missing real effects |
-| **Explanatory/scientific research** (why does X happen) | BIC | Prioritizes correctness and parsimony over pure predictive fit |
-| **Forecasting/production ML systems** (just predict well) | AIC | Prioritizes whatever configuration predicts best on new data |
-
-### Industry Applications
-
-| Field | Typical use | Which criterion |
-|---|---|---|
-| **Finance** — credit scoring, risk models | Selecting which financial ratios predict default | BIC (regulators want few, interpretable, robust variables) |
-| **Healthcare** — clinical prediction models | Choosing biomarkers/clinical variables for a diagnostic model | BIC (interpretability + avoiding false discoveries matters more than marginal accuracy gains) |
-| **Marketing / tech** — churn & recommendation models | Feature selection for a churn or click-prediction model | AIC (predictive lift matters more than which exact features are "true") |
-| **Econometrics / time series** — ARIMA order selection | Choosing lag order $p, q$ in ARIMA models | Both — AIC often preferred for forecasting-focused models, BIC preferred for structural/causal interpretation |
-| **Genomics** — selecting genes/markers from thousands of candidates | High-dimensional variable selection | BIC or its stricter cousin **EBIC** (extended BIC), since $p \gg n$ makes overfitting a serious risk |
-| **A/B testing platforms** | Comparing nested statistical models for experiment analysis | AIC (fast, prediction-oriented decisions at scale) |
-
-### Quick Decision Flowchart (as text)
-
-\`\`\`
-Is your priority "predict well on new data"?
-├── YES → use AIC
-└── NO, priority is "find the true/correct model" or "stay simple & interpretable"
-        └── use BIC
-
-Is your sample size very large (n in the thousands+)?
-├── YES → lean BIC (AIC risks overfitting at scale)
-└── NO  → lean AIC (BIC risks underfitting with limited data)
-\`\`\`
-
-A worked, fully-computed example of **stepwise (mixed) subset selection** in logistic regression — every log-likelihood, AIC, BIC, and likelihood-ratio test below is computed from a real (simulated) 50,000-row dataset, not hand-picked illustrative numbers.
+A worked, fully computed example of **stepwise (mixed) subset selection** in logistic regression — every log-likelihood, AIC, BIC, and likelihood-ratio test below is computed from a real (simulated) 50,000-row dataset, not hand-picked illustrative numbers.
 
 ---
 **Business question:** Will a customer cancel their subscription next month?
@@ -357,6 +285,29 @@ print(final_model.summary())
 ```bash
 pip install numpy pandas statsmodels scipy
 ```
+
+### When to Use AIC vs. BIC
+
+| Use AIC when... | Use BIC when... |
+|---|---|
+| Priority is prediction accuracy | Priority is finding the true model |
+| Sample size is small/moderate | Sample size is large (BIC penalizes harder) |
+| Comparing many candidate models | Want a simpler, interpretable model |
+| Building production ML systems | Doing explanatory/scientific research |
+
+### Industry Applications
+
+| Field | Use | Why |
+|---|---|---|
+| Finance (credit scoring) | BIC | Regulators need few, robust variables |
+| Healthcare (diagnostics) | BIC | Interpretability > marginal accuracy |
+| Marketing/tech (churn, recs) | AIC | Predictive lift matters most |
+| Genomics ($p \gg n$) | BIC / EBIC | Overfitting risk is severe |
+| A/B testing at scale | AIC | Fast, prediction-oriented |
+
+### Quick Rule
+
+$$\text{Priority} = \text{prediction} \Rightarrow \text{AIC} \quad\quad \text{Priority} = \text{truth / simplicity} \Rightarrow \text{BIC}$$
 
 ---
 
