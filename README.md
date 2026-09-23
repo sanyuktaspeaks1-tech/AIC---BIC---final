@@ -156,6 +156,8 @@ $$p = P(\chi^2_1 > 2.982) = \mathbf{0.0842} > 0.05$$
 | 4 | `x7` | 28.18 | <0.0001 | 35,555.43 |
 | 5 | `x4` | 15.94 | 0.00007 | 35,541.49 |
 | — | `x3` *(rejected)* | 2.98 | 0.0842 | — |
+| — | `x6` *(never tested)* | 1.50 | 0.2213 | — |
+| — | `x8` *(never tested)* | 0.62 | 0.4325 | — |
 
 **Selected model:** `churn ~ x2 + x1 + x5 + x7 + x4`
 
@@ -234,8 +236,7 @@ def fit(vars_):
 # ---- Null model ----
 null_model = fit([])
 k0 = 1
-ll0 = null_model.llf
-aic0 = 2 * k0 - 2 * ll0
+ll0 = null_model.llf       # pulls out the log-likelihood number: -20,695.082aic0 = 2 * k0 - 2 * ll0
 bic0 = k0 * np.log(n) - 2 * ll0
 print("\n--- NULL MODEL ---")
 print("Log-likelihood:", ll0)
