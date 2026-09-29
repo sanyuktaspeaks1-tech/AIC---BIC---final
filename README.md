@@ -1,5 +1,16 @@
 # StreamCo Churn Prediction — Subset Selection Case Study
 
+Some terms that you must know before starting out :
+
+🔥Likelihood function measures how plausible a set of parameters (or hypothesis) is, given the data you actually observed.
+
+Question: "I just flipped a coin twice and got $2$ heads. How likely is it that the coin is fair, versus biased toward heads?"
+
+Answer: The data makes a biased coin (e.g., $100\%$ heads) sound much more plausible than a fair coin, though both are possible.
+
+
+
+
 ## Model Selection Criteria — AIC & BIC
 ⚡️Given a collection of models for the data, AIC estimates the quality of each model, relative to each of the other models.
 <img width="1377" height="306" alt="image" src="https://github.com/user-attachments/assets/a99f16f9-e90e-48e7-a963-3370ad2f40d7" />
