@@ -1,6 +1,9 @@
 # StreamCo Churn Prediction — Subset Selection Case Study
 
 ## Model Selection Criteria — AIC & BIC
+⚡️Given a collection of models for the data, AIC estimates the quality of each model, relative to each of the other models.
+<img width="1377" height="306" alt="image" src="https://github.com/user-attachments/assets/a99f16f9-e90e-48e7-a963-3370ad2f40d7" />
+Source: Wikipedia
 
 A worked, fully computed example of **stepwise (mixed) subset selection** in logistic regression — every log-likelihood, AIC, BIC, and likelihood-ratio test below is computed from a real (simulated) 50,000-row dataset, not hand-picked illustrative numbers.
 
