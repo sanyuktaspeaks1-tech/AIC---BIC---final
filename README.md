@@ -40,6 +40,62 @@ A worked, fully computed example of **stepwise (mixed) subset selection** in log
 
 $$P(y_i = 1 \mid x_i) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_{i1} + \cdots + \beta_k x_{ik})}}$$
 
+## 📚 Three Ideas You Need First
+
+### 1. Likelihood: how well does a model explain the data?
+
+**Likelihood** = the probability of the data you actually saw, *if the model were true*.
+
+> You flip a coin twice and get **2 heads**.
+> - Fair coin: $0.5 \times 0.5 = 0.25$
+> - Always-heads coin: $1 \times 1 = 1$
+>
+> The always-heads coin explains this data **4× better**. Higher likelihood = better fit.
+
+With 50,000 customers we add up logs instead of multiplying probabilities:
+
+$$\ln L = \sum_{i=1}^{n} \Big[y_i \ln(\hat p_i) + (1-y_i)\ln(1-\hat p_i)\Big]$$
+
+- Each customer adds one term: ln(chance the model gave to what *actually* happened).
+- $\ln L$ is always negative. **Closer to 0 = better.**
+
+### 2. Likelihood-Ratio (LR) Test: is a new variable worth adding?
+
+$$\text{LR} = 2\big(\ln L_{\text{new}} - \ln L_{\text{old}}\big)$$
+
+- Adding *any* variable, even random noise, nudges $\ln L$ up a little.
+- The test asks: **is the improvement bigger than luck alone would give?**
+- If the new variable is useless, LR follows a $\chi^2_1$ distribution, which exceeds **3.84** only 5% of the time.
+
+| LR | p-value | Decision |
+|---|---|---|
+| > 3.84 | < 0.05 | Variable enters |
+| ≤ 3.84 | ≥ 0.05 | Could be luck, so stop |
+
+<details>
+<summary><b>Why χ²? Wilks' Theorem in 4 lines</b></summary>
+
+1. If the smaller model is the bigger one with $q$ parameters fixed (usually at 0) and the smaller model is true, then for large $n$: $\text{LR} \sim \chi^2_q$.
+2. Near its peak, $\ln L$ is shaped like a parabola, so $\text{LR} \approx \left(\frac{\hat\beta - \beta_0}{SE}\right)^2 = z^2$: the LR is just a squared z-score.
+3. For large $n$, $z \sim N(0,1)$, and a squared standard normal is $\chi^2_1$, so the 5% cutoff is $1.96^2 = 3.84$.
+4. It needs a large sample, nested models, and a null value not on the edge of the allowed range; with only 10 coin flips, the "5%" test rejects 10.9% of the time.
+
+Check it in our output: for `x4`, $z = 4.003$, so $z^2 = 16.02$, and the LR was **15.94**.
+</details>
+
+### 3. AIC & BIC: fit minus a penalty for complexity
+
+<img width="1377" height="306" alt="AIC definition" src="https://github.com/user-attachments/assets/a99f16f9-e90e-48e7-a963-3370ad2f40d7" />
+
+*Source: Wikipedia*
+
+$$\text{AIC} = 2k - 2\ln L \qquad\qquad \text{BIC} = k\ln(n) - 2\ln L$$
+
+- $-2\ln L$ → badness of fit
+- $k$ → number of parameters (variables + intercept)
+- **Lower is better** for both
+- 
+
 **Selection method:** Mixed (bidirectional) stepwise selection using likelihood-ratio tests, α_enter = α_stay = 0.05
 
 ---
@@ -59,23 +115,6 @@ Checking the null model. Without predictors, every customer gets the same predic
 $\ln L = 50{,}000\[0.14498 \ln 0.14498 + 0.85502 \ln 0.85502] = 50{,}000\,(-0.4139) \approx -20{,}695$
 ---
 
-
-### Log-Likelihood (Bernoulli / logistic case)
-
-$$\ln L(\beta) = \sum_{i=1}^{n} \Big[y_i \ln(\hat p_i) + (1-y_i)\ln(1-\hat p_i)\Big]$$
-
-
-$$\text{LR} = 2\big(\ln L_{\text{new}} - \ln L_{\text{old}}\big) \sim \chi^2_{q}$$ (Derivation is way out of scope)
-
-where `q` = number of parameters added/removed (here always 1). Compare against critical value **3.84** at α = 0.05 for `q = 1`.
-
-### AIC / BIC
-
-$$\text{AIC} = 2k - 2\ln L \qquad \text{BIC} = k\ln(n) - 2\ln L$$
-
-`k` = number of parameters (including intercept). Lower is better for both; BIC penalizes complexity more heavily since `ln(50,000) ≈ 10.82 ≫ 2`.
-
----
 
 ## Step-by-Step Selection with Explicit Calculations
 
