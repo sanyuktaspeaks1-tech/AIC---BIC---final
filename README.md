@@ -73,7 +73,7 @@ $$\text{LR} = 2\big(\ln L_{\text{new}} - \ln L_{\text{old}}\big)$$
 | ≤ 3.84 | ≥ 0.05 | Could be luck, so stop |
 
 <details>
-<summary><b>Why χ²? Wilks' Theorem in 4 lines</b></summary>
+<summary><b>Why χ²? Wilks' Theorem </b></summary>
 
 1. If the smaller model is the bigger one with $q$ parameters fixed (usually at 0) and the smaller model is true, then for large $n$: $\text{LR} \sim \chi^2_q$.
 2. Near its peak, $\ln L$ is shaped like a parabola, so $\text{LR} \approx \left(\frac{\hat\beta - \beta_0}{SE}\right)^2 = z^2$: the LR is just a squared z-score.
