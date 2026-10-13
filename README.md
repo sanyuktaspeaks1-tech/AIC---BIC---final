@@ -54,6 +54,9 @@ $$p_i = \frac{1}{1+e^{-z_i}}, \qquad y_i \sim \text{Bernoulli}(p_i)$$
 
 Resulting empirical churn rate: **14.498%**
 
+Checking the null model. Without predictors, every customer gets the same predicted churn rate, 0.14498:
+
+$\ln L = 50{,}000\[0.14498 \ln 0.14498 + 0.85502 \ln 0.85502] = 50{,}000\,(-0.4139) \approx -20{,}695$
 ---
 
 
